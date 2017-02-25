@@ -151,6 +151,10 @@
 				initBackupPIPPower(OptimalPIPFireBackup);	//Backup Actual PIP Mode OptimalPIPFireBackup (1)
 				initPIPPower(WEP,SYS);	//4 WEP 2 SYS (6)
 			}
+			if(Joystick[S3]){
+				if(Joystick[TG1] & !vScanPrimaryFire) vScanPrimaryFire=!vScanPrimaryFire;
+				if((Joystick[S2] | (Joystick[TG2] & sCombinedFire)) & !vScanSecondaryFire) vScanSecondaryFire=!vScanSecondaryFire;
+			}
 		}
 		
 		//Fire !!
@@ -172,34 +176,30 @@
 
 	//FUNCTION: init PrimaryFire
 	int initPrimaryFire(){
-		if(Joystick[TG1] & !vPrimaryFire){
+		if((Joystick[TG1] | (Joystick[TG2] & sCombinedFire)) & !vPrimaryFire){
 			ActKey(KEYON+DOWN+PrimaryFire);
 			vPrimaryFire=!vPrimaryFire;
 			//if(DebugMode) printf("TG1 Down\x0a");
 		}
 		else if(!Joystick[TG1] & vPrimaryFire){
-			if(sExplorerMode & (ExploreModeFire == 0 | ExploreModeFire == 2)){
-				DeferCall(TG1ScanDelay, &ActKey, KEYON+UP+PrimaryFire);
-				//if(DebugMode) printf("TG1 Up ExplorerMode\x0a");
-			}
+			if((sExplorerMode & !vScanPrimaryFire & (ExploreModeFire == 0 | ExploreModeFire == 2)) | vScanPrimaryFire) DeferCall(TG1ScanDelay, &ActKey, KEYON+UP+PrimaryFire);
 			else ActKey(KEYON+UP+PrimaryFire);	//if(DebugMode) printf("TG1 Up\x0a");
+			if(vScanPrimaryFire) vScanPrimaryFire=!vScanPrimaryFire;
 			vPrimaryFire=!vPrimaryFire;
 		}
 	}
 	
 	//FUNCTION: init SecondaryFire
 	int initSecondaryFire(){
-		if(Joystick[S2] & !vSecondaryFire){
+		if((Joystick[S2] | (Joystick[TG2] & sCombinedFire)) & !vSecondaryFire){
 			ActKey(KEYON+DOWN+SecondaryFire);
 			vSecondaryFire=!vSecondaryFire;
 			//if(DebugMode) printf("S2  Down\x0a");
 		}
 		else if(!Joystick[S2] & vSecondaryFire){
-			if(sExplorerMode & (ExploreModeFire == 1 | ExploreModeFire == 2)){
-				DeferCall(S2ScanDelay, &ActKey, KEYON+UP+SecondaryFire);
-				//if(DebugMode) printf("S2  Up ExplorerMode\x0a");
-			}
+			if((sExplorerMode & !vScanSecondaryFire & (ExploreModeFire == 1 | ExploreModeFire == 2)) | vScanSecondaryFire) DeferCall(S2ScanDelay, &ActKey, KEYON+UP+SecondaryFire);
 			else ActKey(KEYON+UP+SecondaryFire);	//if(DebugMode) printf("S2  Up\x0a");
+			if(vScanSecondaryFire) vScanSecondaryFire=!vScanSecondaryFire;
 			vSecondaryFire=!vSecondaryFire;
 		}
 	}
