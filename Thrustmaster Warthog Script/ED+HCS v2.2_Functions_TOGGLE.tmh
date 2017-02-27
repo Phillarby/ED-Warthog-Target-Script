@@ -220,7 +220,7 @@
 	
 	//TOGGLE: HardPoints	
 	int initToggleHardpoints(){
-		if(!Joystick[S3] | (Joystick[S3] & Joystick[TG1]) | (Joystick[S3] & Joystick[S2])){ // No [S3] Pressed OR automatic fire with [S3]?
+		if(!Joystick[S3] | (Joystick[S3] & Joystick[TG1]) | (Joystick[S3] & Joystick[S1])){ // No [S3] Pressed OR automatic fire with [S3]?
 			if(vSecureEscapeFight){	//If initSecureRectract() initialise This Just Display Msg (Hardpoint is Mapped on Button : No Position)
 				if(DebugMode | DebugMMode) printf("HardPoints SecureEscapeFight [%d]\x0a", vSecureEscapeFight);
 			}
@@ -236,7 +236,7 @@
 				if(OptimalPIPMode & !sExplorerMode) initRestorePIPPower(vOptimalPIPHPBackup);	//Restore Previous PIP Mode
 			}
 		}
-		else if(Joystick[S3] & (!Joystick[TG1] | !Joystick[S2])){	//Reset The Flag On The FLY S3 + SWITCH
+		else if(Joystick[S3] & (!Joystick[TG1] | !Joystick[S1])){	//Reset The Flag On The FLY S3 + SWITCH
 			sHardPoints=!sHardPoints;
 			if(DebugMode | DebugMMode) printf("Hardpoints Reset On The Fly with S3\x0a");
 		}
@@ -246,7 +246,7 @@
 
 	//TOGGLE: Silent Runing
 	int initToggleSilentRuning(){
-		if(Joystick[H3D] | Joystick[TG1] | Joystick[S2] | vSLonFire | vSLonEscapeFight | vSLonGameMenu | vSLonCamera){
+		if(Joystick[H3D] | Joystick[TG1] | Joystick[S1] | vSLonFire | vSLonEscapeFight | vSLonGameMenu | vSLonCamera){
 			sSilentRuning=!sSilentRuning;
 			if(SilentRuningGameMode){	//Silent Runing [TOGGLE] Mode Ingame
 				if(HeatSinkonSilentRuning) ActKey(KEYON+PULSE+mHeatSinkonSilentRuning);	//Call The Heat Sink on Silent Running Macro

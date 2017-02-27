@@ -139,7 +139,7 @@
 	
 	//FUNCTION: Init Fire
 	int initFire(){
-		if(Joystick[TG1] | Joystick[S2]){
+		if(Joystick[TG1] | Joystick[S1]){
 			if(SilentRuningOFFonFire & sSilentRuning & !vSLonFire){	//ShutDown Silent Runing if it running
 				vSLonFire=!vSLonFire;
 				vSilentRuningBackup = sSilentRuning;	//Backup Actual Silent Runing State
@@ -153,7 +153,7 @@
 			}
 			if(Joystick[S3]){
 				if(Joystick[TG1] & !vScanPrimaryFire) vScanPrimaryFire=!vScanPrimaryFire;
-				if((Joystick[S2] | (Joystick[TG2] & sCombinedFire)) & !vScanSecondaryFire) vScanSecondaryFire=!vScanSecondaryFire;
+				if((Joystick[S1] | (Joystick[TG2] & sCombinedFire)) & !vScanSecondaryFire) vScanSecondaryFire=!vScanSecondaryFire;
 			}
 		}
 		
@@ -161,7 +161,7 @@
 		initPrimaryFire();
 		initSecondaryFire();
 		
-		if(!Joystick[TG1] & !Joystick[S2]){
+		if(!Joystick[TG1] & !Joystick[S1]){
 			if(OptimalPIPMode & !sExplorerMode) initRestorePIPPower(vOptimalPIPFireBackup);	//Restore Previous PIP Mode
 			if(HardPointsonFireGameMode & StopFireRetractHardpoints & sHardPoints & !sExplorerMode) initToggleHardpoints();//Retract Hardpoint if StopFireRetractHardpoints & HardPointsonFireGameMode are Enable
 			if(vSilentRuningBackup!=0){	//Restore Silent Runing if it was running before fire
@@ -191,12 +191,12 @@
 	
 	//FUNCTION: init SecondaryFire
 	int initSecondaryFire(){
-		if((Joystick[S2] | (Joystick[TG2] & sCombinedFire)) & !vSecondaryFire){
+		if((Joystick[S1] | (Joystick[TG2] & sCombinedFire)) & !vSecondaryFire){
 			ActKey(KEYON+DOWN+SecondaryFire);
 			vSecondaryFire=!vSecondaryFire;
 			//if(DebugMode) printf("S2  Down\x0a");
 		}
-		else if(!Joystick[S2] & vSecondaryFire){
+		else if(!Joystick[S1] & vSecondaryFire){
 			if((sExplorerMode & !vScanSecondaryFire & (ExploreModeFire == 1 | ExploreModeFire == 2)) | vScanSecondaryFire) DeferCall(S2ScanDelay, &ActKey, KEYON+UP+SecondaryFire);
 			else ActKey(KEYON+UP+SecondaryFire);	//if(DebugMode) printf("S2  Up\x0a");
 			if(vScanSecondaryFire) vScanSecondaryFire=!vScanSecondaryFire;

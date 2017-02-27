@@ -114,10 +114,15 @@ int main()
 	MapKey (&Joystick, TG2, 0);	// Reseved for initCombinedFire()
 	MapKeyR(&Joystick, TG2, 0);	// Reseved for initCombinedFire()	
 
-	MapKey(&Joystick, S1, TEMPO(EXEC("initToggleCombinedFire();"), EXEC("initToggleHardpoints();"), LongPressDelay));
+//	MapKey(&Joystick, S1, TEMPO(EXEC("initToggleCombinedFire();"), EXEC("initToggleHardpoints();"), LongPressDelay));
 
-	MapKey (&Joystick, S2, EXEC("initFire();"));
-	MapKeyR(&Joystick, S2, EXEC("initFire();"));
+//	MapKey (&Joystick, S2, EXEC("initFire();"));
+//	MapKeyR(&Joystick, S2, EXEC("initFire();"));
+	
+	MapKey(&Joystick, S1, EXEC("initFire();"));
+	MapKeyR(&Joystick, S1, EXEC("initFire();"));	
+
+	MapKey (&Joystick, S2, TEMPO(EXEC("initToggleCombinedFire();"), EXEC("initToggleHardpoints();"), LongPressDelay));
 
 	//MapKey(&Joystick, S3, 0);	// Modifier S3 don't touch this
 	
